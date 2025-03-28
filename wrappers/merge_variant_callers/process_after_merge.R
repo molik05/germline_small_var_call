@@ -1,5 +1,5 @@
 suppressMessages(library(data.table))
-suppressMessages(library(VennDiagram))
+# suppressMessages(library(VennDiagram))
 
 run_all <- function(args){
   var_file <- args[1]
@@ -32,6 +32,7 @@ run_all <- function(args){
     #add and correct info
     var_tab[caller == "haplotypecaller",filter := "PASS"]
     var_tab[caller != "varscan",var_reads := coverage_depth - var_reads]
+    var_tab[caller == "vardict",var_reads := vcfR::extract.gt(vcf,element = "VD",as.numeric = T)[which(var_tab$caller == "vardict"),1]]
     var_tab[var_reads > coverage_depth,var_reads := coverage_depth]
     if(any(var_tab$caller == "varscan",na.rm = T)){
       ADF <- vcfR::extract.gt(vcf,element = "ADF",as.numeric = T)[var_tab$caller == "varscan"]
@@ -178,5 +179,5 @@ run_all <- function(args){
 
 #run as Rscript
 # 
-args <- commandArgs(trailingOnly = T)
-run_all(args)
+# args <- commandArgs(trailingOnly = T)
+# run_all(args)
