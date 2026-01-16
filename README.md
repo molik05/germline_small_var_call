@@ -1,6 +1,6 @@
 # BioIT-CEITEC/germline_small_var_call
 <p align="justify">
-This repository provides a Snakemake-based workflow for germline small variant calling. The pipeline integrates multiple widely used germline variant callers and combines their results. The workflow can be applied to DNA-seq as well as RNA-seq data. For RNA samples, spliced alignments are automatically processed using `SplitNCigarReads` prior to variant calling. The selection of variant callers and analysis mode is controlled via a central configuration file. The design allows individual variant callers to be enabled or disabled without modifying the workflow itself.
+This repository provides a Snakemake-based workflow for germline small variant calling. The pipeline integrates multiple widely used germline variant callers, combines and filters their results. The workflow can be applied to DNA-seq (both WGS and targeted) as well as RNA-seq data. For RNA samples, spliced alignments are automatically processed prior to variant calling. The selection of variant callers and analysis mode is controlled via a central configuration file. The design allows individual variant callers to be enabled or disabled without modifying the workflow itself.
 </p>
 
 ## Requirements
@@ -56,7 +56,7 @@ snakemake --use-conda --cores <N>
 
 ### Required inputs
 - `mapped/{sample}.bam`  
-  BAM files containing aligned reads produced by an upstream pipeline (DNA-seq or RNA-seq).
+  BAM files containing aligned reads produced by an upstream pipeline.
 
 For DNA samples, this BAM file is used directly for variant calling.
 
@@ -65,7 +65,7 @@ For RNA samples (`lib_ROI: rna` in the config), the workflow automatically gener
 ## Output
 ### Main outputs
 - `germline_varcalls/*`  
-  Directory containing the final results of germline variant calling for each sample, including individual variant caller outputs and consensus vcf files.  
+  Directory containing the final results of germline variant calling for each sample, including individual variant caller outputs and consensus tsv and vcf files.  
 
 ### Additional outputs
 
